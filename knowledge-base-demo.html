@@ -1,0 +1,1080 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Knowledge Base Operativo — Demo de Portafolio</title>
+    <style>
+        /* ── RESET & BASE ── */
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --navy:       #0f2544;
+            --navy-mid:   #1b3a5c;
+            --accent:     #2e86ab;
+            --accent-light: #48a9cc;
+            --gold:       #f0a500;
+            --bg:         #f4f7fb;
+            --surface:    #ffffff;
+            --text:       #1e293b;
+            --text-muted: #64748b;
+            --border:     #e2e8f0;
+            --sidebar-w:  300px;
+            --header-h:   64px;
+            --radius:     10px;
+            --shadow:     0 2px 12px rgba(15,37,68,.10);
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            font-size: 15px;
+            line-height: 1.7;
+        }
+
+        /* ── DEMO BANNER ── */
+        .demo-banner {
+            background: linear-gradient(90deg, var(--gold), #e08c00);
+            color: #1a1a1a;
+            text-align: center;
+            padding: 8px 16px;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: .3px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        .demo-banner a { color: var(--navy); font-weight: 700; }
+
+        /* ── HEADER ── */
+        .header {
+            background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 100%);
+            height: var(--header-h);
+            display: flex;
+            align-items: center;
+            padding: 0 24px;
+            position: sticky;
+            top: 32px;
+            z-index: 900;
+            box-shadow: 0 2px 16px rgba(0,0,0,.25);
+            gap: 16px;
+        }
+
+        .header-logo {
+            width: 36px; height: 36px;
+            background: var(--accent);
+            border-radius: 8px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 18px; flex-shrink: 0;
+        }
+
+        .header h1 {
+            color: #fff;
+            font-size: 15px;
+            font-weight: 700;
+            letter-spacing: .5px;
+            text-transform: uppercase;
+        }
+
+        .header-badge {
+            margin-left: auto;
+            background: rgba(255,255,255,.12);
+            border: 1px solid rgba(255,255,255,.2);
+            color: rgba(255,255,255,.85);
+            font-size: 11px;
+            padding: 3px 10px;
+            border-radius: 20px;
+            letter-spacing: .4px;
+        }
+
+        /* ── LAYOUT ── */
+        .container {
+            display: flex;
+            min-height: calc(100vh - var(--header-h) - 32px);
+        }
+
+        /* ── SIDEBAR ── */
+        .sidebar {
+            width: var(--sidebar-w);
+            background: var(--navy);
+            position: sticky;
+            top: calc(var(--header-h) + 32px);
+            height: calc(100vh - var(--header-h) - 32px);
+            overflow-y: auto;
+            flex-shrink: 0;
+            padding: 20px 0 40px;
+            scrollbar-width: thin;
+            scrollbar-color: var(--accent) transparent;
+        }
+
+        .sidebar::-webkit-scrollbar { width: 4px; }
+        .sidebar::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 4px; }
+
+        .sidebar-section-label {
+            color: rgba(255,255,255,.35);
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 1.2px;
+            text-transform: uppercase;
+            padding: 18px 20px 6px;
+        }
+
+        .sidebar ul { list-style: none; }
+
+        .sidebar ul li a {
+            display: block;
+            color: rgba(255,255,255,.72);
+            text-decoration: none;
+            font-size: 12.5px;
+            padding: 8px 20px 8px 28px;
+            border-left: 3px solid transparent;
+            transition: all .18s;
+            line-height: 1.4;
+        }
+
+        .sidebar ul li a:hover,
+        .sidebar ul li a.active {
+            color: #fff;
+            background: rgba(46,134,171,.18);
+            border-left-color: var(--accent-light);
+        }
+
+        /* ── MAIN ── */
+        .content {
+            flex: 1;
+            padding: 32px 40px 60px;
+            max-width: 900px;
+        }
+
+        section {
+            margin-bottom: 56px;
+            scroll-margin-top: calc(var(--header-h) + 48px);
+        }
+
+        section h2 {
+            font-size: 19px;
+            font-weight: 700;
+            color: var(--navy);
+            text-transform: uppercase;
+            letter-spacing: .6px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid var(--accent);
+            margin-bottom: 20px;
+        }
+
+        section h3 {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--navy-mid);
+            margin: 20px 0 10px;
+        }
+
+        section p { margin-bottom: 12px; color: var(--text); }
+
+        .subsection {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 20px 24px;
+            margin-bottom: 20px;
+            box-shadow: var(--shadow);
+        }
+
+        /* ── CARDS ── */
+        .two-column-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 16px;
+        }
+
+        .column {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 20px;
+            box-shadow: var(--shadow);
+        }
+
+        .column h3 {
+            font-size: 13px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: .5px;
+            color: var(--accent);
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 8px;
+            margin-bottom: 14px;
+        }
+
+        .contact-block {
+            background: var(--bg);
+            border-radius: 8px;
+            padding: 10px 14px;
+            margin-bottom: 10px;
+            border-left: 3px solid var(--accent);
+        }
+
+        .contact-block p { margin-bottom: 2px; font-size: 13.5px; }
+        .contact-block strong { color: var(--navy); }
+
+        .indented { padding-left: 14px; color: var(--text-muted); font-size: 13.5px; }
+
+        .observation-text {
+            background: #fff8e1;
+            border: 1px solid #f0c040;
+            border-radius: 8px;
+            padding: 12px 16px;
+            font-size: 13.5px;
+            color: #5a4000;
+        }
+
+        /* ── LINKS ── */
+        a { color: var(--accent); text-decoration: none; font-weight: 500; }
+        a:hover { color: var(--accent-light); text-decoration: underline; }
+
+        .btn-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            background: var(--accent);
+            color: #fff !important;
+            padding: 8px 16px;
+            border-radius: 7px;
+            font-size: 13px;
+            font-weight: 600;
+            margin: 8px 0;
+            transition: background .18s;
+            text-decoration: none !important;
+        }
+        .btn-link:hover { background: var(--navy-mid); }
+        .btn-link.outline {
+            background: transparent;
+            border: 2px solid var(--accent);
+            color: var(--accent) !important;
+        }
+        .btn-link.outline:hover { background: var(--accent); color: #fff !important; }
+
+        /* ── VIDEO PLACEHOLDER ── */
+        .video-placeholder {
+            background: linear-gradient(135deg, #0f2544 60%, #1b3a5c);
+            border-radius: var(--radius);
+            aspect-ratio: 16/9;
+            max-width: 680px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin: 16px 0;
+            color: rgba(255,255,255,.7);
+            font-size: 13px;
+            gap: 10px;
+            border: 1px solid rgba(255,255,255,.08);
+        }
+
+        .video-placeholder .play-icon {
+            width: 56px; height: 56px;
+            background: var(--accent);
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 22px;
+        }
+
+        .video-placeholder span { font-size: 12px; opacity: .6; }
+
+        /* ── IMAGE PLACEHOLDER ── */
+        .img-placeholder {
+            background: var(--border);
+            border-radius: 8px;
+            height: 180px;
+            display: flex; align-items: center; justify-content: center;
+            color: var(--text-muted);
+            font-size: 13px;
+            margin: 10px 0;
+            border: 2px dashed #c0cfe0;
+        }
+
+        .image-container {
+            display: flex;
+            gap: 16px;
+            margin: 16px 0;
+            flex-wrap: wrap;
+        }
+
+        .image-container .img-placeholder {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        /* ── STEPS ── */
+        .steps ol { padding-left: 20px; }
+        .steps li { margin-bottom: 10px; padding-left: 6px; }
+        .steps li::marker { color: var(--accent); font-weight: 700; }
+
+        /* ── NAVIERA LIST ── */
+        .naviera-list { list-style: none; padding: 0; }
+        .naviera-list li {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 10px 16px;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            box-shadow: var(--shadow);
+        }
+        .naviera-list li strong { color: var(--navy); min-width: 160px; font-size: 13px; }
+
+        /* ── CODE / STRUCTURE ── */
+        .code-box {
+            background: #1e293b;
+            color: #e2e8f0;
+            border-radius: 8px;
+            padding: 16px 20px;
+            font-family: 'Consolas', monospace;
+            font-size: 13px;
+            margin: 12px 0;
+            overflow-x: auto;
+            line-height: 1.8;
+        }
+
+        .code-box .key { color: #7dd3fc; }
+        .code-box .val { color: #86efac; }
+
+        /* ── PORTFOLIO NOTE ── */
+        .portfolio-note {
+            background: linear-gradient(135deg, #0f2544, #1b3a5c);
+            color: rgba(255,255,255,.85);
+            border-radius: var(--radius);
+            padding: 20px 24px;
+            margin-bottom: 32px;
+            font-size: 13.5px;
+            line-height: 1.7;
+            border-left: 4px solid var(--gold);
+        }
+
+        .portfolio-note strong { color: var(--gold); }
+
+        /* ── BADGE ── */
+        .badge {
+            display: inline-block;
+            background: rgba(46,134,171,.12);
+            color: var(--accent);
+            border: 1px solid rgba(46,134,171,.3);
+            border-radius: 20px;
+            padding: 2px 10px;
+            font-size: 11.5px;
+            font-weight: 600;
+            margin: 2px;
+        }
+
+        /* ── MOBILE ── */
+        @media (max-width: 768px) {
+            .sidebar { display: none; }
+            .content { padding: 20px 16px; }
+            .two-column-layout { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- DEMO BANNER -->
+<div class="demo-banner">
+    ⚡ DEMO DE PORTAFOLIO — Herramienta web desarrollada para gestión de conocimiento operativo en agencia de aduanas.
+    Proyecto real con datos ficticios. <a href="https://github.com" target="_blank">Ver código en GitHub →</a>
+</div>
+
+<!-- HEADER -->
+<div class="header">
+    <div class="header-logo">📋</div>
+    <h1>Sistema de Gestión de Conocimiento Operativo — Importaciones</h1>
+    <span class="header-badge">DEMO · v2.0</span>
+</div>
+
+<div class="container">
+
+    <!-- SIDEBAR -->
+    <nav class="sidebar" id="sidebar">
+        <div class="sidebar-section-label">Configuración Inicial</div>
+        <ul>
+            <li><a href="#presentacion-importador">Presentación del Importador</a></li>
+            <li><a href="#equipo-operativo-importador">Equipo Operativo Importador</a></li>
+            <li><a href="#equipo-operativo-logistica">Equipo Operativo — Operador Logístico</a></li>
+        </ul>
+
+        <div class="sidebar-section-label">Proceso Operativo</div>
+        <ul>
+            <li><a href="#notificacion-importaciones">Inicio Nuevas Importaciones</a></li>
+            <li><a href="#apertura-do">Apertura del DO Imp y Exp</a></li>
+            <li><a href="#seguimiento-embarques">Seguimiento Embarques</a></li>
+            <li><a href="#trazabilidad-importaciones">Trazabilidad Importaciones</a></li>
+            <li><a href="#factura-lista-empaque">Factura y Lista de Empaque</a></li>
+            <li><a href="#hbl-fletes-poliza">HBL – Fletes – Póliza</a></li>
+            <li><a href="#revision-documentos">Revisión Documentos</a></li>
+            <li><a href="#resumen-primeros-pasos">Resumen Primeros Pasos</a></li>
+        </ul>
+
+        <div class="sidebar-section-label">Análisis y Digitación</div>
+        <ul>
+            <li><a href="#analisis-informacion">Análisis Información Productos</a></li>
+            <li><a href="#digitacion-declaraciones">Digitación Declaraciones</a></li>
+            <li><a href="#envio-dim-revision">Envío DIM Revisión</a></li>
+            <li><a href="#envio-dim-visto-bueno">Envío DIM Visto Bueno</a></li>
+        </ul>
+
+        <div class="sidebar-section-label">Aceptación y Pagos</div>
+        <ul>
+            <li><a href="#aceptacion-pago-impuestos">Aceptación DIM y Pago Impuestos</a></li>
+            <li><a href="#aceptacion-dim-zf">Aceptación DIM Zona Franca</a></li>
+            <li><a href="#informe-bancolombia">Reporte Bancolombia</a></li>
+            <li><a href="#actualizacion-dim">Actualización DIM Anticipada</a></li>
+            <li><a href="#levante-mercancia">Levante de Mercancía</a></li>
+            <li><a href="#entrega-documentos">Entrega Docs Transportadora</a></li>
+            <li><a href="#facturacion-cierre">Facturación y Cierre</a></li>
+        </ul>
+
+        <div class="sidebar-section-label">Reportes e Informes</div>
+        <ul>
+            <li><a href="#informe-relacion">Informe Relación Importaciones</a></li>
+            <li><a href="#reporte-mensual-dim">Reporte Declaraciones en Ceros</a></li>
+            <li><a href="#reporte-mensual-referencias">Reporte Mensual Referencias</a></li>
+            <li><a href="#reporte-diario">Reporte Diario a Importador</a></li>
+            <li><a href="#reporte-operaciones">Reporte Operaciones</a></li>
+            <li><a href="#proceso-pagos">Proceso Interno de Pagos</a></li>
+        </ul>
+
+        <div class="sidebar-section-label">Procesos Especiales</div>
+        <ul>
+            <li><a href="#procesos-esporadicos">Procesos Esporádicos</a></li>
+            <li><a href="#importaciones-temporales">Importaciones Temporales OEA</a></li>
+        </ul>
+
+        <div class="sidebar-section-label">Recursos y Archivos</div>
+        <ul>
+            <li><a href="#macros-excel">Macros de Excel</a></li>
+            <li><a href="#archivos-pruebas">Archivos para Pruebas</a></li>
+            <li><a href="#archivos-estructura">Estructura de Datos</a></li>
+            <li><a href="#ciclo-operativo">Ciclo Operativo de Pedidos</a></li>
+        </ul>
+    </nav>
+
+    <!-- MAIN CONTENT -->
+    <main class="content">
+
+        <!-- NOTA DE PORTAFOLIO -->
+        <div class="portfolio-note">
+            <strong>🎯 Nota de Portafolio</strong><br>
+            Esta herramienta fue desarrollada como solución real para centralizar el conocimiento operativo de un proceso de importación, eliminando la pérdida de know-how por rotación de personal. 
+            El sistema original contenía imágenes, videos tutoriales, PDFs normativos y enlaces a sistemas corporativos internos. 
+            <strong>En este demo, los recursos multimedia han sido reemplazados por placeholders</strong> para proteger información confidencial. 
+            La arquitectura, lógica de navegación y estructura de contenido son 100% originales.
+            <br><br>
+            <span class="badge">HTML</span>
+            <span class="badge">CSS</span>
+            <span class="badge">JavaScript</span>
+            <span class="badge">Single-Page App</span>
+            <span class="badge">Gestión del Conocimiento</span>
+            <span class="badge">Onboarding -66%</span>
+        </div>
+
+        <!-- PRESENTACION -->
+        <section id="presentacion-importador">
+            <h2>Presentación del Importador</h2>
+            <p>
+                <strong>Importador Demo SAS</strong> con NIT Nro. 900.000.001-0, tiene por objeto social la venta al por mayor y al por menor de calzado, prendas de vestir y accesorios deportivos. Empresa con certificación <strong>Operador Económico Autorizado (OEA)</strong> otorgada por la DIAN.
+            </p>
+            <p>
+                El importador se encuentra ubicado en Bogotá D.C., con operaciones de distribución a nivel nacional. Maneja un volumen promedio de <strong>4 a 6 contenedores 40' HQ por pedido</strong>, con frecuencia mensual de importación.
+            </p>
+            <div class="image-container">
+                <div class="img-placeholder">📦 Imagen: Productos del Importador</div>
+                <div class="img-placeholder">🏢 Logo del Importador</div>
+            </div>
+        </section>
+
+        <!-- EQUIPO IMPORTADOR -->
+        <section id="equipo-operativo-importador">
+            <h2>Equipo Operativo Importador</h2>
+            <div class="two-column-layout">
+                <div class="column">
+                    <h3>Principales Contactos</h3>
+                    <div class="contact-block">
+                        <p><strong>Directora de CEDI:</strong></p>
+                        <p class="indented">Ana Gómez Demo</p>
+                        <p class="indented">a.gomez@importador-demo.com</p>
+                        <p class="indented">Cel: 310 000 0001</p>
+                    </div>
+                    <div class="contact-block">
+                        <p><strong>Líder Equipo de Tráfico:</strong></p>
+                        <p class="indented">Carlos Ruiz Demo</p>
+                        <p class="indented">c.ruiz@importador-demo.com</p>
+                        <p class="indented">Cel: 310 000 0002</p>
+                    </div>
+                    <div class="contact-block">
+                        <p><strong>Analista Logística / Importaciones:</strong></p>
+                        <p class="indented">Laura Torres Demo</p>
+                        <p class="indented">l.torres@importador-demo.com</p>
+                        <p class="indented">Cel: 310 000 0003</p>
+                    </div>
+                </div>
+                <div class="column">
+                    <h3>Otros Contactos y Observaciones</h3>
+                    <div class="contact-block">
+                        <p><strong>Director de Operaciones Latinoamérica:</strong></p>
+                        <p class="indented">Marco Silva Demo</p>
+                        <p class="indented">m.silva@importador-demo.com</p><br>
+                        <p><b>Observaciones:</b><br>
+                        Es el director de toda la operación para Latinoamérica. Generalmente mantiene comunicación con la gerencia del operador logístico. Puede realizar solicitudes puntuales por correo que deben atenderse con prioridad.</p>
+                    </div>
+                    <div class="contact-block">
+                        <p><strong>Analista Contable:</strong></p>
+                        <p class="indented">Patricia Mora Demo</p>
+                        <p class="indented">p.mora@importador-demo.com</p>
+                        <p class="indented">Cel: 310 000 0005</p>
+                    </div>
+                </div>
+            </div>
+            <div class="contact-block">
+                <p><strong>⚠️ Observaciones de Escalamiento:</strong></p>
+                <p class="observation-text">
+                    La persona de contacto diario es <b>Laura Torres Demo</b> (Analista de Importaciones). Si no hay respuesta en 24 horas, escalar con <b>Carlos Ruiz Demo</b> (Líder de Tráfico). En última instancia, acudir a <b>Ana Gómez Demo</b> (Directora CEDI). Nunca contactar directamente a Marco Silva salvo solicitud expresa.
+                </p>
+            </div>
+        </section>
+
+        <!-- EQUIPO LOGISTICA -->
+        <section id="equipo-operativo-logistica">
+            <h2>Equipo Operativo — Operador Logístico</h2>
+            <div class="two-column-layout">
+                <div class="column">
+                    <h3>Principales Contactos</h3>
+                    <div class="contact-block">
+                        <p><strong>Líder Nacional de la Cuenta:</strong></p>
+                        <p class="indented">Diana Vargas Demo</p>
+                        <p class="indented">d.vargas@logistica-demo.com</p>
+                        <p class="indented">Cel: 311 000 0001</p>
+                    </div>
+                    <div class="contact-block">
+                        <p><strong>Director de Aduanas:</strong></p>
+                        <p class="indented">Jorge Pérez Demo</p>
+                        <p class="indented">j.perez@logistica-demo.com</p>
+                        <p class="indented">Cel: 311 000 0002</p>
+                    </div>
+                    <div class="contact-block">
+                        <p><strong>Equipo Aduanas Buenaventura:</strong></p>
+                        <p class="indented">Pedro Martínez Demo · 311 000 0003</p>
+                        <p class="indented">Sofía Herrera Demo · 311 000 0004</p>
+                    </div>
+                    <div class="contact-block">
+                        <p><strong>Equipo Aduanas Cartagena:</strong></p>
+                        <p class="indented">Luis Castro Demo · 311 000 0005</p>
+                        <p class="indented">Mónica Ríos Demo · 311 000 0006</p>
+                    </div>
+                </div>
+                <div class="column">
+                    <h3>Roles Específicos</h3>
+                    <div class="contact-block">
+                        <p><strong>Coordinador Área Técnica Aduanas:</strong><br>
+                        <small>(Revisión DIM, RIM, Clasificación Arancelaria)</small></p>
+                        <p class="indented">Roberto Díaz Demo</p>
+                        <p class="indented">r.diaz@logistica-demo.com</p>
+                    </div>
+                    <div class="contact-block">
+                        <p><strong>Carga Internacional:</strong></p>
+                        <p class="indented">Oscar Gómez Demo</p>
+                        <p class="indented">o.gomez@logistica-demo.com</p>
+                    </div>
+                    <div class="contact-block">
+                        <p><strong>Ejecutivo Transportadora Terrestre:</strong></p>
+                        <p class="indented">Valentina Cruz Demo</p>
+                        <p class="indented">v.cruz@transportadora-demo.com</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- NOTIFICACION -->
+        <section id="notificacion-importaciones">
+            <h2>Inicio de Nuevas Importaciones</h2>
+            <p>Las nuevas importaciones son notificadas por el operador logístico. El mensaje de notificación mantiene la siguiente estructura estándar:</p>
+            <div class="code-box">
+                <span class="key">D.O //</span> <span class="val">MXXXXXXX01</span> <span class="key">// IMPORTADOR DEMO SAS — INFORME EMBARQUE</span> <span class="val">1 X 40 HQ</span> <span class="key">MIT – BUN //</span> <span class="val">PO XX.XX</span> <span class="key">// BL #</span> <span class="val">C8DM00001A</span> <span class="key">// NAVIERA:</span> <span class="val">COSCO</span>
+            </div>
+            <div class="subsection">
+                <h3>Estructura del Mensaje</h3>
+                <p><strong>D.O // MXXXXXXXX:</strong> Número del Documento de Operación del operador logístico.</p>
+                <p><strong>1 X 40 HQ:</strong> Cantidad inicial de contenedores (puede aumentar según pedido).</p>
+                <p><strong>MIT – BUN:</strong> Puerto de salida (MIT = Manzanillo, México) y Puerto de arribo (BUN = Buenaventura).</p>
+                <p><strong>PO XX.XX:</strong> Número de pedido del cliente. Formato: año + consecutivo de pedido.</p>
+                <p><strong>BL # C8DM00001A:</strong> Número del HBL. Puede abrirse en A, B, C según cantidad de documentos hijos.</p>
+            </div>
+            <a class="btn-link outline" href="#">📄 Ver PDF de Ejemplo — Notificación de Importación</a>
+        </section>
+
+        <!-- APERTURA DO -->
+        <section id="apertura-do">
+            <h2>Apertura del DO de Imp y Exp</h2>
+            <p>Al recibir cualquier notificación de nueva importación o exportación, se debe realizar la apertura del DO <strong>el mismo día o máximo al día siguiente.</strong></p>
+            <div class="steps subsection">
+                <h3>Procedimiento Paso a Paso</h3>
+                <ol>
+                    <li><strong>Paso 1 — Sistema de Gestión:</strong> Abrir el DO en el sistema interno de gestión de operaciones. El número generado tiene la estructura: <code>M-AÑO-MES-ADUANA-CONSECUTIVO</code>. Ejemplo: <strong>MXXXXXX01</strong> (M=Importación, XX=año, XX=mes, XX=Cartagena, 001=consecutivo).</li>
+                    <li><strong>Paso 2 — OpenComex:</strong> Abrir manualmente el DO en OpenComex con los mismos datos para garantizar la trazabilidad en la plataforma aduanera.</li>
+                    <li><strong>Paso 3 — Informe Diario:</strong> Registrar el nuevo DO en el archivo del Informe Diario de Operaciones en SharePoint.</li>
+                </ol>
+            </div>
+            <a class="btn-link" href="#">📊 Acceder al Informe Diario</a>
+            <div class="video-placeholder">
+                <div class="play-icon">▶</div>
+                <strong>Video Tutorial — Apertura de DO en sistemas</strong>
+                <span>Duración aprox: 8 minutos · Disponible en sistema corporativo</span>
+            </div>
+        </section>
+
+        <!-- SEGUIMIENTO -->
+        <section id="seguimiento-embarques">
+            <h2>Seguimiento de Embarques</h2>
+            <p>El operador logístico envía <strong>dos reportes diarios</strong> (mañana y tarde) para seguimiento de arribo. Adicionalmente se puede hacer seguimiento directo en las páginas de las navieras usando el número de Booking o MBL:</p>
+            <ul class="naviera-list">
+                <li><strong>EVERGREEN</strong> <a href="https://ct.shipmentlink.com/servlet/TDB1_CargoTracking.do" target="_blank">→ Rastrear embarque</a></li>
+                <li><strong>MAERSK</strong> <a href="https://www.maersk.com/tracking/" target="_blank">→ Rastrear embarque</a></li>
+                <li><strong>HAPAG LLOYD</strong> <a href="https://www.hapag-lloyd.com/en/online-business/track/track-by-booking-solution.html" target="_blank">→ Rastrear embarque</a></li>
+                <li><strong>COSCO</strong> <a href="https://elines.coscoshipping.com/ebusiness/" target="_blank">→ Rastrear embarque</a></li>
+                <li><strong>CMA CGM</strong> <a href="https://www.cma-cgm.com/ebusiness/tracking" target="_blank">→ Rastrear embarque</a></li>
+                <li><strong>MSC</strong> <a href="https://www.msc.com/en/track-a-shipment" target="_blank">→ Rastrear embarque</a></li>
+            </ul>
+        </section>
+
+        <!-- TRAZABILIDAD -->
+        <section id="trazabilidad-importaciones">
+            <h2>Trazabilidad de Importaciones</h2>
+            <p>La solicitud de documentos se debe realizar <strong>10 días antes del arribo</strong> de la mercancía, para poder presentar declaraciones anticipadas <strong>2 días antes del arribo.</strong></p>
+            <div class="subsection">
+                <h3>Estructura del Asunto del Correo</h3>
+                <div class="code-box">
+SOLICITUD FACTURAS Y LISTAS DE EMPAQUE // IMPORTADOR DEMO SAS // PED. XX.XX.XX1 // COSCO 1X40HQ MIT-BUN // HBL # C8DM00001A // DO MXXXXXXXX01
+                </div>
+                <h3>Etapas que se notifican por la misma cadena de correo</h3>
+                <p class="indented">1. Solicitud de Facturas y Listas de Empaque</p>
+                <p class="indented">2. Confirmación de Recibido de Documentos</p>
+                <p class="indented">3. Solicitud de Vistos Buenos para las DIM</p>
+                <p class="indented">4. Aceptación de Declaraciones Anticipadas e Iniciales</p>
+                <p class="indented">5. Notificación de Levante de Mercancías</p>
+                <p class="indented">6. Facturación de la Importación</p>
+            </div>
+            <a class="btn-link outline" href="#">📄 Ver PDF de Ejemplo — Trazabilidad</a>
+        </section>
+
+        <!-- FACTURA -->
+        <section id="factura-lista-empaque">
+            <h2>Recibido de Factura y Lista de Empaque</h2>
+            <p>Los documentos generalmente son enviados por la filial internacional del importador, no directamente por la casa matriz Colombia. Es necesario analizar el cuerpo del correo para determinar <strong>en cuántos HBL se dividió el embarque</strong> — cada HBL representa un proceso de nacionalización independiente.</p>
+            <div class="img-placeholder">📧 Imagen: Ejemplo de correo con división de HBLs</div>
+            <a class="btn-link outline" href="#">📄 Ver PDF — Ejemplo de Correo con Facturas</a>
+        </section>
+
+        <!-- HBL -->
+        <section id="hbl-fletes-poliza">
+            <h2>HBL – Fletes – Póliza</h2>
+            <p>Una vez recibidas las facturas, el Agente de Carga Internacional también enviará el MBL, HBL(s), certificado de fletes y la póliza de transporte internacional. Esta documentación debe recibirse <strong>el mismo día o máximo al día siguiente.</strong></p>
+            <div class="subsection">
+                <h3>Documentos requeridos</h3>
+                <p><strong>MBL:</strong> Master Bill of Lading — documento de transporte principal emitido por la naviera.</p>
+                <p><strong>HBL:</strong> House Bill of Lading — documento emitido por el agente de carga (uno por proceso de nacionalización).</p>
+                <p><strong>Certificado de Fletes:</strong> Necesario para calcular el valor en aduana (CIF).</p>
+                <p><strong>Póliza de Seguro Internacional:</strong> Requerida como documento soporte en la DIM.</p>
+            </div>
+        </section>
+
+        <!-- REVISION -->
+        <section id="revision-documentos">
+            <h2>Revisión de Documentos</h2>
+            <p>Antes de iniciar la digitación de las declaraciones, se debe verificar que todos los documentos soporte estén completos y correctos. Lista de verificación:</p>
+            <div class="subsection steps">
+                <ol>
+                    <li>Facturas comerciales (todas las que correspondan al HBL)</li>
+                    <li>Listas de empaque con descripción mínima de mercancías</li>
+                    <li>HBL firmado y con estado "Released"</li>
+                    <li>Certificado de fletes con valor discriminado</li>
+                    <li>Póliza de seguro internacional</li>
+                    <li>Certificados de origen (cuando aplique por preferencia arancelaria)</li>
+                    <li>Vistos buenos y/o reglamentos técnicos vigentes</li>
+                </ol>
+            </div>
+        </section>
+
+        <!-- RESUMEN -->
+        <section id="resumen-primeros-pasos">
+            <h2>Video Resumen — Primeros Pasos</h2>
+            <p>Video consolidado con el resumen de todo el proceso desde la notificación hasta la solicitud de documentos:</p>
+            <div class="video-placeholder">
+                <div class="play-icon">▶</div>
+                <strong>Video Resumen — Primeros Pasos del Proceso de Importación</strong>
+                <span>Duración aprox: 15 minutos · Disponible en sistema corporativo</span>
+            </div>
+        </section>
+
+        <!-- ANALISIS -->
+        <section id="analisis-informacion">
+            <h2>Análisis de Información de Productos</h2>
+            <p>Cada tipo de producto requiere una estructura específica de datos en Excel para que la macro ETL procese correctamente las descripciones mínimas. A continuación, el procedimiento por categoría:</p>
+
+            <div class="subsection">
+                <h3>Calzado</h3>
+                <p>Requiere estructurar composición de materiales (exterior, interior, suela) en columnas separadas. Las siglas de materiales deben seguir la nomenclatura del catálogo de subpartidas arancelarias.</p>
+                <a class="btn-link outline" href="#">📄 PDF — Siglas y Composiciones para Calzado</a>
+                <div class="video-placeholder">
+                    <div class="play-icon">▶</div>
+                    <strong>Tutorial — Estructura de Datos para Calzado</strong>
+                    <span>Duración aprox: 12 minutos</span>
+                </div>
+            </div>
+
+            <div class="subsection">
+                <h3>Ropa y Prendas de Vestir</h3>
+                <p>Las composiciones textiles (ej: 100% Cotton, 80% Polyester 20% Cotton) deben ser traducidas y organizadas según los requisitos de la subpartida arancelaria correspondiente.</p>
+                <div class="video-placeholder">
+                    <div class="play-icon">▶</div>
+                    <strong>Tutorial — Estructura de Datos para Ropa</strong>
+                    <span>Duración aprox: 10 minutos</span>
+                </div>
+            </div>
+
+            <div class="subsection">
+                <h3>Medias, Gorras, Accesorios</h3>
+                <p>Para estos productos se debe aclarar la unidad comercial: muchos vienen en cajas o paquetes, pero la subpartida arancelaria exige declarar unidades individuales (pares, piezas). La macro calcula automáticamente la conversión si las columnas están correctamente nombradas.</p>
+                <div class="img-placeholder">📊 Imagen: Ejemplo de estructura de columnas para conversión de unidades</div>
+                <div class="video-placeholder">
+                    <div class="play-icon">▶</div>
+                    <strong>Tutorial — Estructura de Datos para Medias y Accesorios</strong>
+                    <span>Duración aprox: 11 minutos</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- DIGITACION -->
+        <section id="digitacion-declaraciones">
+            <h2>Digitación de Declaraciones</h2>
+            <p>La digitación de las Declaraciones de Importación (DIM) se realiza mediante el sistema ETL automatizado con Excel VBA, que procesa los archivos de descripciones mínimas y genera el formato requerido para cargar en Siglo XXI DIAN.</p>
+            <div class="video-placeholder">
+                <div class="play-icon">▶</div>
+                <strong>Tutorial — Proceso Completo de Digitación DIM con Macro Excel</strong>
+                <span>Este video explica el uso de la macro ETL que redujo el tiempo de digitación en un 75% · Duración aprox: 20 minutos</span>
+            </div>
+        </section>
+
+        <!-- ENVIO DIM REVISION -->
+        <section id="envio-dim-revision">
+            <h2>Envío DIM — Revisión Interna</h2>
+            <p>Una vez digitadas las DIM, se envían al equipo técnico interno (Coordinador de Aduanas) para revisión antes de solicitar el visto bueno del importador.</p>
+            <div class="subsection">
+                <h3>Destinatarios del Correo de Revisión Interna</h3>
+                <p><strong>Dirigido a:</strong> roberto.diaz@logistica-demo.com (Coordinador Técnico)</p>
+                <p><strong>Con copia a:</strong> jorge.perez@logistica-demo.com (Director Aduanas)</p>
+                <p><strong>Si arriba por Buenaventura, copiar también a:</strong> pedro.martinez@logistica-demo.com</p>
+                <p><strong>Si arriba por Cartagena, copiar también a:</strong> luis.castro@logistica-demo.com</p>
+            </div>
+            <div class="video-placeholder">
+                <div class="play-icon">▶</div>
+                <strong>Tutorial — Envío DIM para Revisión Interna</strong>
+                <span>Duración aprox: 6 minutos</span>
+            </div>
+        </section>
+
+        <!-- ENVIO DIM VISTO BUENO -->
+        <section id="envio-dim-visto-bueno">
+            <h2>Envío DIM — Visto Bueno Importador</h2>
+            <p>Tras la revisión interna, se envían las DIM al importador para aprobación final antes de la transmisión a DIAN.</p>
+            <div class="subsection">
+                <h3>Destinatarios del Correo de Visto Bueno</h3>
+                <p><strong>Dirigido a:</strong> l.torres@importador-demo.com (Analista de Importaciones)</p>
+                <p><strong>Con copia a:</strong> c.ruiz@importador-demo.com (Líder de Tráfico)</p>
+                <p><strong>Si arriba por Buenaventura, copiar también a:</strong> pedro.martinez@logistica-demo.com</p>
+                <p><strong>Si arriba por Cartagena, copiar también a:</strong> luis.castro@logistica-demo.com</p>
+            </div>
+            <div class="video-placeholder">
+                <div class="play-icon">▶</div>
+                <strong>Tutorial — Envío DIM para Visto Bueno del Importador</strong>
+                <span>Duración aprox: 5 minutos</span>
+            </div>
+        </section>
+
+        <!-- ACEPTACION -->
+        <section id="aceptacion-pago-impuestos">
+            <h2>Aceptación DIM Anticipada y Pago de Impuestos</h2>
+            <p>Una vez aceptadas las DIM (anticipadas o iniciales), se deben ejecutar inmediatamente dos acciones paralelas:</p>
+            <div class="subsection steps">
+                <ol>
+                    <li>Diligenciar el <strong>Reporte Bancolombia</strong> con los datos de la DIM aceptada.</li>
+                    <li>Subir el PDF de la DIM con soporte de pago en ceros a la carpeta correspondiente en SharePoint.</li>
+                    <li>Notificar al importador que el PDF ya está disponible en SharePoint.</li>
+                </ol>
+            </div>
+            <p>👉 Ver sección: <a href="#informe-bancolombia">Reporte Bancolombia</a></p>
+            <div class="video-placeholder">
+                <div class="play-icon">▶</div>
+                <strong>Tutorial — Aceptación de DIM Anticipadas</strong>
+                <span>Duración aprox: 9 minutos</span>
+            </div>
+        </section>
+
+        <!-- ZONA FRANCA -->
+        <section id="aceptacion-dim-zf">
+            <h2>Aceptación DIM Inicial en Zona Franca</h2>
+            <p>Para mercancía que se nacionaliza en Zona Franca, se debe <strong>pre-alertar el ingreso al depósito con mínimo 3 días de anticipación</strong> al arribo de la mercancía.</p>
+            <div class="subsection">
+                <h3>Documentos a enviar al depósito (carpeta comprimida)</h3>
+                <p>▸ Facturas comerciales | ▸ Lista de empaque | ▸ HBL/MBL | ▸ Borradores de DIM revisadas | ▸ Valor en aduana | ▸ Certificado de fletes | ▸ Póliza de seguro</p>
+            </div>
+            <div class="img-placeholder">📁 Imagen: Ejemplo de estructura de carpeta con documentos</div>
+            <a class="btn-link outline" href="#">📥 Descargar Formato Excel — Información para Zona Franca</a>
+            <div class="video-placeholder">
+                <div class="play-icon">▶</div>
+                <strong>Tutorial — Proceso de Nacionalización en Zona Franca</strong>
+                <span>Duración aprox: 14 minutos</span>
+            </div>
+        </section>
+
+        <!-- BANCOLOMBIA -->
+        <section id="informe-bancolombia">
+            <h2>Reporte Bancolombia</h2>
+            <p>Este reporte debe diligenciarse de forma <strong>inmediata</strong> al momento de la aceptación de las DIM. El archivo vive en el SharePoint del importador y registra todos los pagos en ceros correspondientes a la certificación OEA.</p>
+            <a class="btn-link" href="#">📊 Acceder al Reporte Bancolombia</a>
+            <div class="subsection">
+                <h3>Nomenclatura para nombrar los PDFs de las DIM</h3>
+                <p><strong>Embarques marítimos:</strong> <code>DIM CON PAGO EMB. 001 PAGOS EN CEROS POR OEA</code></p>
+                <p><strong>Embarques aéreos:</strong> <code>DIM CON PAGO EMB. AERO-001 PAGOS EN CEROS POR OEA</code></p>
+                <p><strong>Muebles:</strong> <code>DIM CON PAGO EMB. MUE-001 PAGOS EN CEROS POR OEA</code></p>
+            </div>
+        </section>
+
+        <!-- ACTUALIZACION DIM -->
+        <section id="actualizacion-dim">
+            <h2>Actualización DIM Anticipada</h2>
+            <p>Las DIM anticipadas deben ser actualizadas una vez la mercancía llega al puerto. Se actualiza el número de manifiesto y la fecha de arribo efectivo en Siglo XXI DIAN.</p>
+            <div class="video-placeholder">
+                <div class="play-icon">▶</div>
+                <strong>Tutorial — Actualización de DIM Anticipada</strong>
+                <span>Duración aprox: 7 minutos</span>
+            </div>
+        </section>
+
+        <!-- LEVANTE -->
+        <section id="levante-mercancia">
+            <h2>Notificación de Levante de Mercancía</h2>
+            <p>Una vez DIAN concede el levante, se notifica al importador y al equipo de transporte para coordinar el retiro de la mercancía del depósito o puerto.</p>
+            <div class="video-placeholder">
+                <div class="play-icon">▶</div>
+                <strong>Tutorial — Proceso de Levante y Notificación</strong>
+                <span>Duración aprox: 6 minutos</span>
+            </div>
+        </section>
+
+        <!-- ENTREGA DOCS -->
+        <section id="entrega-documentos">
+            <h2>Entrega Documentos a Transportadora</h2>
+            <p>Con el levante otorgado, se prepara el paquete de documentos para la transportadora terrestre que retira la mercancía del puerto o depósito hacia el CEDI del importador.</p>
+            <div class="subsection steps">
+                <h3>Documentos a entregar</h3>
+                <ol>
+                    <li>DIM con levante (impresa o en PDF)</li>
+                    <li>Carta de autorización de retiro</li>
+                    <li>Planilla de traslado (si aplica)</li>
+                    <li>Autorización de ingreso al CEDI destino</li>
+                </ol>
+            </div>
+        </section>
+
+        <!-- FACTURACION -->
+        <section id="facturacion-cierre">
+            <h2>Facturación y Cierre de la Importación</h2>
+            <p>Una vez entregada la mercancía, se procede con la facturación de los servicios aduaneros al importador y el cierre del DO en todos los sistemas.</p>
+            <div class="video-placeholder">
+                <div class="play-icon">▶</div>
+                <strong>Tutorial — Facturación y Cierre del Proceso</strong>
+                <span>Duración aprox: 10 minutos</span>
+            </div>
+        </section>
+
+        <!-- INFORMES -->
+        <section id="informe-relacion">
+            <h2>Informe de Relación de Importaciones</h2>
+            <p>Informe consolidado mensual de todas las importaciones procesadas, enviado al importador como soporte de gestión operativa.</p>
+            <a class="btn-link" href="#">📊 Acceder al Informe en SharePoint</a>
+            <div class="video-placeholder">
+                <div class="play-icon">▶</div>
+                <strong>Tutorial — Elaboración Informe de Relación</strong>
+                <span>Duración aprox: 8 minutos</span>
+            </div>
+        </section>
+
+        <section id="reporte-mensual-dim">
+            <h2>Reporte Declaraciones Pagadas en Ceros</h2>
+            <p>Reporte mensual de todas las DIM aceptadas con pago en ceros gracias a la certificación OEA del importador. Es un requisito de cumplimiento ante DIAN.</p>
+            <div class="video-placeholder">
+                <div class="play-icon">▶</div>
+                <strong>Tutorial — Reporte Mensual DIM en Ceros</strong>
+                <span>Duración aprox: 6 minutos</span>
+            </div>
+        </section>
+
+        <section id="reporte-mensual-referencias">
+            <h2>Reporte Mensual por Referencias</h2>
+            <p>Reporte de nacionalizaciones agrupado por referencia de producto, utilizado por el importador para control de inventario y planeación de compras.</p>
+            <a class="btn-link" href="#">📊 Acceder al Reporte</a>
+            <div class="video-placeholder">
+                <div class="play-icon">▶</div>
+                <strong>Tutorial — Reporte Mensual por Referencias</strong>
+                <span>Duración aprox: 7 minutos</span>
+            </div>
+        </section>
+
+        <section id="reporte-diario">
+            <h2>Reporte Diario al Importador</h2>
+            <p>Reporte diario del estado de todos los procesos activos, enviado cada tarde al equipo de tráfico del importador.</p>
+            <div class="video-placeholder">
+                <div class="play-icon">▶</div>
+                <strong>Tutorial — Elaboración Reporte Diario</strong>
+                <span>Duración aprox: 5 minutos</span>
+            </div>
+        </section>
+
+        <section id="reporte-operaciones">
+            <h2>Reporte Diario de Operaciones</h2>
+            <a class="btn-link" href="#">📊 Acceder al Reporte Operaciones</a>
+            <div class="video-placeholder">
+                <div class="play-icon">▶</div>
+                <strong>Tutorial — Reporte Diario Operaciones Internas</strong>
+                <span>Duración aprox: 5 minutos</span>
+            </div>
+        </section>
+
+        <!-- PAGOS -->
+        <section id="proceso-pagos">
+            <h2>Proceso Interno de Pagos</h2>
+            <p>Para cualquier pago requerido (impuestos, bodegajes, liberaciones), el correo de solicitud sigue una cadena de aprobación interna antes de ejecutarse.</p>
+            <div class="subsection">
+                <h3>Pagos con DHL Express</h3>
+                <p><strong>Nota importante:</strong> Si el valor de bodegaje supera $900.000, se debe fraccionar en dos pagos — la plataforma no procesa montos superiores en una sola transacción.</p>
+                <a class="btn-link outline" href="https://aduanasdhlexpress.dhl.com/herramientas/liberacion-de-guias/" target="_blank">Calcular Liberación de Guías DHL</a><br>
+                <a class="btn-link outline" href="https://clientes.aduanasdhlexpress.dhl.com/warehouse/" target="_blank">Calcular Bodegajes DHL</a><br>
+                <a class="btn-link outline" href="https://clientes.aduanasdhlexpress.dhl.com/payments/" target="_blank">Plataforma de Pagos DHL</a>
+            </div>
+            <div class="subsection">
+                <h3>Pagos — Depósito CEDI Bogotá</h3>
+                <a class="btn-link outline" href="https://www.avalpaycenter.com/wps/portal/portal-de-pagos/web/pagos-aval" target="_blank">Ir a Pagos Aval</a>
+            </div>
+            <div class="video-placeholder">
+                <div class="play-icon">▶</div>
+                <strong>Tutorial — Proceso Completo de Pagos Internos</strong>
+                <span>Duración aprox: 11 minutos</span>
+            </div>
+        </section>
+
+        <!-- ESPORADICOS -->
+        <section id="procesos-esporadicos">
+            <h2>Procesos Esporádicos</h2>
+            <div class="subsection">
+                <h3>Pago de Impuestos Courier</h3>
+                <div class="video-placeholder">
+                    <div class="play-icon">▶</div>
+                    <strong>Tutorial — Pago Impuestos Courier</strong>
+                    <span>Duración aprox: 5 minutos</span>
+                </div>
+            </div>
+            <div class="subsection">
+                <h3>Diligenciamiento Formato Cotización de Seguro</h3>
+                <p>Las cotizaciones de seguro se requieren para mercancías en modo aéreo courier que sufrieron cambio de modalidad. El costo a cobrar al importador es de $50.000 por cotización.</p>
+                <a class="btn-link outline" href="#">📄 Acceder al Formato y Archivo de Consecutivo</a>
+                <a class="btn-link outline" href="#">📄 Formato Diligenciado de Ejemplo</a>
+                <div class="video-placeholder">
+                    <div class="play-icon">▶</div>
+                    <strong>Tutorial — Cotización de Seguro</strong>
+                    <span>Duración aprox: 6 minutos</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- IMPORTACIONES TEMPORALES -->
+        <section id="importaciones-temporales">
+            <h2>Importaciones Temporales OEA</h2>
+            <p>Los importadores con certificación OEA tienen el beneficio de no constituir garantías para sus obligaciones aduaneras, de acuerdo con el Decreto 1165/19 y la Resolución 46/19.</p>
+            <div class="subsection steps">
+                <h3>Procedimiento</h3>
+                <ol>
+                    <li>Reunir todos los documentos soporte de la nacionalización.</li>
+                    <li>Contar con la resolución de calificación OEA emitida por la DIAN.</li>
+                    <li>Obtener carta del importador justificando la importación temporal.</li>
+                    <li>Proceder con aceptación, pagos en ceros y solicitud de levante.</li>
+                    <li>Con levante otorgado, el importador puede disponer de la mercancía.</li>
+                    <li>Enviar informe a la DIAN el último día hábil de la semana del levante, al buzón: <a href="mailto:dsa_bogdorado_controlgarantias@dian.gov.co">dsa_bogdorado_controlgarantias@dian.gov.co</a></li>
+                    <li>Radicar físicamente en Control de Garantías de la administración aduanera correspondiente.</li>
+                </ol>
+            </div>
+            <a class="btn-link outline" href="#">📄 Oficio 5710/2022 — Lineamientos OEA</a><br>
+            <a class="btn-link outline" href="#">📄 Memorando 072/2020 — Lineamientos OEA</a><br>
+            <a class="btn-link outline" href="#">📚 Libro de Beneficios OEA</a>
+            <div class="video-placeholder">
+                <div class="play-icon">▶</div>
+                <strong>Tutorial — Importaciones Temporales OEA</strong>
+                <span>Duración aprox: 12 minutos</span>
+            </div>
+        </section>
+
+        <!-- MACROS -->
+        <section id="macros-excel">
+            <h2>Macros de Excel</h2>
+            <p>En los siguientes enlaces podrá descargar las macros ETL desarrolladas para automatizar el proceso de digitación. Seguir el paso a paso explicado en cada video tutorial.</p>
+            <a class="btn-link" href="#">📥 Descargar Macros Excel (Carpeta Comprimida .zip)</a>
+        </section>
+
+        <!-- ARCHIVOS PRUEBAS -->
+        <section id="archivos-pruebas">
+            <h2>Archivos para Pruebas</h2>
+            <p>Archivos de Excel con datos de prueba para practicar el proceso de digitación antes de trabajar con datos reales:</p>
+            <a class="btn-link" href="#">📥 Descargar Todos los Archivos de Práctica (.zip)</a>
+        </section>
+
+        <!-- ESTRUCTURA DATOS -->
+        <section id="archivos-estructura">
+            <h2>Archivos de Estructura de Datos</h2>
+            <p>Plantillas guía con la estructura de datos requerida para cada tipo de producto. Usar estas plantillas para organizar los archivos del proveedor antes de procesarlos con las macros:</p>
+            <a class="btn-link" href="#">📥 Descargar Plantillas de Estructura de Datos (.zip)</a>
+        </section>
+
+        <!-- CICLO OPERATIVO -->
+        <section id="ciclo-operativo">
+            <h2>Ciclo Operativo de Pedidos</h2>
+            <p>Guía visual completa del ciclo operativo desde la notificación de un nuevo pedido hasta la facturación, tanto para embarques aéreos como marítimos:</p>
+            <a class="btn-link outline" href="#">📄 Ciclo de Importación — Pedidos Aéreos (PDF)</a><br>
+            <a class="btn-link outline" href="#">📄 Ciclo de Importación — Pedidos Marítimos (PDF)</a>
+        </section>
+
+    </main>
+</div>
+
+<script>
+    // Highlight activo en sidebar según scroll
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.sidebar a');
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                navLinks.forEach(link => link.classList.remove('active'));
+                const active = document.querySelector(`.sidebar a[href="#${entry.target.id}"]`);
+                if (active) active.classList.add('active');
+            }
+        });
+    }, { rootMargin: '-30% 0px -60% 0px' });
+
+    sections.forEach(s => observer.observe(s));
+</script>
+
+</body>
+</html>

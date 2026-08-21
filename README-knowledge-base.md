@@ -1,0 +1,140 @@
+# 📋 Knowledge Base Operativo — Sistema de Gestión de Conocimiento
+
+Aplicación web single-page desarrollada para centralizar el conocimiento operativo crítico de un proceso de importación aduanera, eliminando la pérdida de know-how por rotación de personal y reduciendo el onboarding de nuevos operadores de 3 semanas a 1 semana.
+
+---
+
+## El problema que resolvía
+
+En entornos operativos de alta rotación, el conocimiento crítico del proceso vive en la cabeza de las personas — no en los documentos. Los SOP estándar describen *qué* hacer, pero no capturan:
+
+- Las particularidades técnicas de cada cliente
+- Los criterios de decisión en situaciones no estándar
+- Las alertas y excepciones que solo se aprenden con experiencia
+- El paso a paso real de cada etapa, con sus tiempos y dependencias
+
+Cuando un operador renunciaba sin que llegara su reemplazo, **todo ese conocimiento desaparecía con él**, generando reprocesos, errores normativos y semanas de reentrenamiento.
+
+## La solución
+
+Desarrollé una aplicación web que funciona como **manual operativo vivo e interactivo**, navegable por secciones, con contenido multimedia integrado (videos tutoriales, PDFs normativos, imágenes explicativas) y enlaces directos a los sistemas operativos relevantes.
+
+El nuevo operador llega, abre la herramienta y encuentra todo lo que necesita saber para ejecutar el proceso con autonomía desde el primer día.
+
+---
+
+## Resultado
+
+| Métrica | Antes | Después |
+|---|---|---|
+| Tiempo de onboarding operativo | 3 semanas | 1 semana |
+| Dependencia de capacitador presencial | Alta | Eliminada |
+| Pérdida de conocimiento por rotación | Crítica | Controlada |
+| Disponibilidad del conocimiento | Solo en personas | 24/7 en la herramienta |
+
+---
+
+## ¿Qué contiene la herramienta?
+
+La aplicación cubre el ciclo operativo completo de importación aduanera, organizado en 6 bloques temáticos:
+
+**Configuración inicial**
+- Presentación del importador, NIT, objeto social y ubicación
+- Directorio completo de contactos: importador, operador logístico, transportadora, equipo técnico
+- Cadena de escalamiento y criterios de comunicación por interlocutor
+
+**Proceso operativo**
+- Inicio y apertura de nuevas importaciones (DO en sistemas internos y OpenComex)
+- Seguimiento de embarques con links directos a navieras (COSCO, Maersk, Evergreen, CMA CGM, MSC, Hapag Lloyd)
+- Trazabilidad por cadena de correo: estructura de asuntos, destinatarios y etapas a notificar
+
+**Análisis y digitación**
+- Estructura de datos requerida por tipo de producto (calzado, ropa, medias, accesorios, muebles)
+- Instrucciones de uso de macros ETL para digitación automatizada de declaraciones
+- Envío DIM para revisión interna y visto bueno del importador
+
+**Aceptación y pagos**
+- Proceso de aceptación DIM anticipada e inicial
+- Procedimiento especial para Zona Franca con pre-alerta al depósito
+- Diligenciamiento del Reporte Bancolombia (requisito OEA)
+- Proceso de pagos internos: DHL Express, Pagos Aval, solicitudes de pago
+
+**Reportes e informes**
+- Informe de relación de importaciones (mensual)
+- Reporte de declaraciones pagadas en ceros (cumplimiento OEA)
+- Reporte mensual por referencias
+- Reporte diario al importador y al equipo operativo
+
+**Procesos especiales y recursos**
+- Importaciones temporales bajo certificación OEA
+- Macros de Excel descargables
+- Archivos de estructura de datos por categoría de producto
+- Ciclo operativo visual (aéreo y marítimo)
+
+---
+
+## Tecnologías
+
+| Tecnología | Uso |
+|---|---|
+| HTML5 semántico | Estructura de contenido y navegación |
+| CSS3 (variables, Grid, Flexbox) | Diseño responsivo y sistema de tokens de diseño |
+| JavaScript (ES6+, IntersectionObserver) | Navegación activa y scroll tracking |
+| Single-Page Architecture | Toda la herramienta en un único archivo portable |
+
+**Sin frameworks. Sin dependencias externas. Sin build tools.**
+El archivo corre con doble clic en cualquier navegador moderno.
+
+---
+
+## Arquitectura del proyecto original
+
+```
+knowledge-base/
+│
+├── INSTRUCTIVO-PROCEDIMIENTO-OPERATIVO.html   ← aplicación principal
+│
+└── assets/                                     ← recursos internos
+    ├── imagenes/       ← capturas de sistemas, diagramas, ejemplos visuales
+    ├── videos/         ← +20 videos tutoriales grabados por el autor
+    ├── pdf-de-ejemplo/ ← documentos normativos y formatos de ejemplo
+    ├── libros_excel/   ← macros ETL y archivos de estructura de datos
+    ├── script.js       ← lógica de navegación
+    └── style.css       ← estilos
+```
+
+En este repositorio se publica la versión **demo de portafolio**: un único archivo HTML autocontenido con datos ficticios, donde los recursos multimedia han sido reemplazados por placeholders descriptivos para proteger la confidencialidad de la operación original.
+
+---
+
+## ⚠️ Nota de confidencialidad
+
+Esta herramienta fue desarrollada para una agencia de aduanas colombiana con operaciones reales. Los datos han sido reemplazados por ficticios en esta versión de portafolio:
+
+- Nombres de empresas, personas y contactos → datos de demostración
+- Videos tutoriales originales → placeholders descriptivos
+- Imágenes de sistemas internos → placeholders
+- Links a SharePoint corporativo → desactivados
+- Links a sistemas internos (OpenComex, Siglo XXI, etc.) → desactivados
+- Links a sistemas públicos (navieras, DHL, Pagos Aval, DIAN) → funcionales
+
+---
+
+## Metodología de desarrollo
+
+**El contenido y la arquitectura de información son 100% del autor.**
+
+Todo el conocimiento operativo, la estructura de secciones, el flujo de navegación, las instrucciones paso a paso, las alertas críticas y los criterios de decisión fueron diseñados y redactados por el autor — Ingeniero de Sistemas y especialista en operaciones aduaneras con más de 7 años de experiencia en el sector.
+
+El desarrollo de la interfaz (HTML/CSS/JS) fue realizado con metodología **vibe coding**: el autor diseñó la lógica, la estructura y los requerimientos funcionales; la generación de código fue asistida por IA (Claude de Anthropic); la validación, prueba y ajuste de cada componente fue ejecutada por el autor.
+
+> Esta es la forma en que los profesionales modernos construyen herramientas: con dominio del problema, claridad en los requerimientos y uso estratégico de herramientas de aceleración técnica.
+
+---
+
+## Autor
+
+Ingeniero de Sistemas | Analista de Datos & Automatización de Procesos
+
+- LinkedIn: www.linkedin.com/in/-soft
+
